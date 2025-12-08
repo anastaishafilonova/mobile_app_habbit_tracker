@@ -1,13 +1,17 @@
 package com.habit_tracker.backend.challenge.controller;
 
 import com.habit_tracker.backend.challenge.dto.*;
+import com.habit_tracker.backend.challenge.entity.Challenge;
 import com.habit_tracker.backend.challenge.service.ChallengeService;
+import com.habit_tracker.backend.challenge_user.entity.ChallengeUser;
+import com.habit_tracker.backend.user.entity.User;
 import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/challenges")
@@ -37,6 +41,14 @@ public class ChallengeController {
       @AuthenticationPrincipal UUID userId
   ) {
     return challengeService.getMyChallenges(userId);
+  }
+
+  @GetMapping("/get/{id}")
+  public ChallengeDto getChallenge(
+      @AuthenticationPrincipal UUID userId,
+      @PathVariable("id") UUID challengeId
+  ) {
+    return challengeService.getChallenge(challengeId, userId);
   }
 
   @PostMapping("/{id}/progress")

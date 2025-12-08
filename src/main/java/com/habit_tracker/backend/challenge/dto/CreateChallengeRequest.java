@@ -32,6 +32,8 @@ public class CreateChallengeRequest {
   private UUID templateId;
 
   private List<UUID> opponentIds;
+  @NotNull
+  private String icon;
 
   public CreateChallengeRequest() {
   }
@@ -106,5 +108,13 @@ public class CreateChallengeRequest {
 
   public void setOpponentIds(List<UUID> opponentIds) {
     this.opponentIds = opponentIds;
+  }
+
+  public String getIcon() {
+    return icon;
+  }
+
+  public void setIcon(String icon) {
+    this.icon = icon;
   }
 }

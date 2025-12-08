@@ -4,6 +4,7 @@ import com.habit_tracker.backend.challenge.dto.ChallengeDto;
 import com.habit_tracker.backend.challenge.dto.ChallengeLibraryDto;
 import com.habit_tracker.backend.challenge.dto.CreateChallengeRequest;
 import com.habit_tracker.backend.challenge.dto.InviteUsersRequest;
+import com.habit_tracker.backend.challenge.entity.Challenge;
 
 import java.util.List;
 import java.util.UUID;
@@ -19,6 +20,8 @@ public interface ChallengeService {
   ChallengeDto markProgress(UUID currentUserId, UUID challengeId);
 
   ChallengeDto completeChallenge(UUID currentUserId, UUID challengeId);
+
+  ChallengeDto getChallenge(UUID challengeId, UUID currentUserId);
 
   void deleteChallenge(UUID currentUserId, UUID challengeId);
 

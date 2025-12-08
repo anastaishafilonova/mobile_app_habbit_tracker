@@ -20,7 +20,8 @@ public class ChallengeDto {
   private boolean pushOn;
   private UUID templateId;
   private UUID createdBy;
-  private List<UUID> participantIds;
+  private List<ChallengeParticipantDto> participants;
+  private String icon;
 
   public ChallengeDto() {}
 
@@ -37,7 +38,8 @@ public class ChallengeDto {
       boolean pushOn,
       UUID templateId,
       UUID createdBy,
-      List<UUID> participantIds) {
+      List<ChallengeParticipantDto> participants,
+      String icon) {
     this.id = id;
     this.title = title;
     this.description = description;
@@ -50,7 +52,8 @@ public class ChallengeDto {
     this.pushOn = pushOn;
     this.templateId = templateId;
     this.createdBy = createdBy;
-    this.participantIds = participantIds;
+    this.participants = participants;
+    this.icon = icon;
   }
 
   public UUID getId() {
@@ -149,11 +152,19 @@ public class ChallengeDto {
     this.createdBy = createdBy;
   }
 
-  public List<UUID> getParticipantIds() {
-    return participantIds;
+  public List<ChallengeParticipantDto> getParticipants() {
+    return participants;
   }
 
-  public void setParticipantIds(List<UUID> participantIds) {
-    this.participantIds = participantIds;
+  public void setParticipants(List<ChallengeParticipantDto> participants) {
+    this.participants = participants;
+  }
+
+  public String getIcon() {
+    return icon;
+  }
+
+  public void setIcon(String icon) {
+    this.icon = icon;
   }
 }

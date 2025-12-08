@@ -1,5 +1,6 @@
 package com.habit_tracker.backend.challenge.entity;
 
+import com.habit_tracker.backend.challenge_user.entity.ChallengeUser;
 import com.habit_tracker.backend.user.entity.User;
 import jakarta.persistence.*;
 
@@ -53,7 +54,10 @@ public class Challenge {
   @JoinColumn(name = "created_by")
   private User createdBy;
 
-  @ManyToMany
+  @Column(name = "icon", nullable = false)
+  private String icon;
+
+  @OneToMany
   @JoinTable(
       name = "challenge_user",
       joinColumns = @JoinColumn(name = "challenge_id"),
@@ -208,5 +212,13 @@ public class Challenge {
 
   public void addParticipant(User user) {
     this.participants.add(user);
+  }
+
+  public String getIcon() {
+    return this.icon;
+  }
+
+  public void setIcon(String icon) {
+    this.icon = icon;
   }
 }

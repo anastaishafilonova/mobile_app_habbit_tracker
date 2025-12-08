@@ -9,7 +9,6 @@ public class UserDto {
   private String username;
   private int score;
   private String avatarImage;
-
   public UserDto() {
   }
 

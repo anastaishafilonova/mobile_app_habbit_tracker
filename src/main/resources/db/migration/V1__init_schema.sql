@@ -41,7 +41,8 @@ CREATE TABLE IF NOT EXISTS challenges (
     created_by       UUID REFERENCES users(id),
 
     created_at       TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    updated_at       TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    updated_at       TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    icon             TEXT NOT NULL
 );
 
 
