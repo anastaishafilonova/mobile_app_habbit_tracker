@@ -8,7 +8,7 @@ struct ProfileView: View {
     
     @State private var selectedPhoto: PhotosPickerItem?
     @State private var localAvatarImage: UIImage?
-    private let baseURL: URL = URL(string: "http://192.168.1.138:8086")!
+    private let baseURL: URL = URL(string: "http://93.175.4.58:8086")!
     
     var body: some View {
         ZStack {

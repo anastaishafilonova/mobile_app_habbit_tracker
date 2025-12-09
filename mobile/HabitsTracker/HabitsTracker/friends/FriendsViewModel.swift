@@ -22,7 +22,10 @@ final class FriendsViewModel: ObservableObject {
     }
 
     func loadFriends() {
-        friends = FriendsStore.shared.load(for: userId!)
+        guard let id = userId else {
+            return
+        }
+        friends = FriendsStore.shared.load(for: id)
     }
 
     func addFriend(_ user: UserDTO) {

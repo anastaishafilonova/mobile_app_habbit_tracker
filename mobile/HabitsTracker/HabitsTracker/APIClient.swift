@@ -25,7 +25,7 @@ final class APIClient {
 
     private init() {}
 
-    private let baseURL = "http://192.168.1.138:8086/api"
+    private let baseURL = "http://93.175.4.58:8086/api"
 
     func request<T: Decodable>(
         _ endpoint: String,
