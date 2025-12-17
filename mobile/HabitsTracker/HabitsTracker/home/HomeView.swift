@@ -133,7 +133,7 @@ struct HomeView: View {
                         }
                     }
                 } else if viewModel.errorMessage == nil {
-                    Text("У вас пока нет активных челленджей.")
+                    Text("У вас пока нет активных челленджей")
                         .foregroundColor(.white.opacity(0.7))
                         .font(.system(size: 15))
                 }

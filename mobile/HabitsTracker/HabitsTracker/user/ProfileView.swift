@@ -8,7 +8,7 @@ struct ProfileView: View {
     
     @State private var selectedPhoto: PhotosPickerItem?
     @State private var localAvatarImage: UIImage?
-    private let baseURL: URL = URL(string: "http://93.175.4.58:8086")!
+    private let baseURL: URL = URL(string: "http://10.25.145.1:8086")!
     
     var body: some View {
         ZStack {
@@ -123,11 +123,22 @@ struct ProfileView: View {
                     }
                     .frame(maxWidth: .infinity)
                     .padding(.top, 8)
-
-                    Text("Score: \(viewModel.user?.score ?? 0)")
-                        .font(.system(size: 18, weight: .semibold))
-                        .foregroundColor(.white)
-                        .padding(.top, 12)
+                    HStack(spacing: 14) {
+                        Text("Баллы")
+                            .font(.system(size: 16))
+                            .foregroundColor(.white)
+                    
+                        Spacer()
+                        Text("\(viewModel.user?.score ?? 0)")
+                            .font(.system(size: 16))
+                            .foregroundColor(.white)
+                    }
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 14)
+                    .background(
+                        RoundedRectangle(cornerRadius: 20)
+                            .fill(Color(red: 0.13, green: 0.09, blue: 0.23))
+                    )
 
                     Text("НАСТРОЙКИ")
                         .font(.system(size: 13, weight: .semibold))

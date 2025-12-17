@@ -110,13 +110,7 @@ struct ParticipantView: View {
 
     var body: some View {
         HStack(spacing: 12) {
-            Circle()
-                .fill(Color.white.opacity(0.12))
-                .frame(width: 46, height: 46)
-                .overlay(
-                    Image(systemName: "person.fill")
-                        .foregroundColor(.white)
-                )
+            AvatarView(avatarPath: participant.avatarImage, size: 46)
 
             VStack(alignment: .leading, spacing: 4) {
                 Text(participant.name)

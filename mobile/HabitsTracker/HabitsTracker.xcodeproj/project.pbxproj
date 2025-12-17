@@ -42,6 +42,10 @@
 		0C6DC0812EDE02DB00DBB0DF /* FriendsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6DC0802EDE02DB00DBB0DF /* FriendsStore.swift */; };
 		0C6DC0832EDE218600DBB0DF /* ChallengeTemplateDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6DC0822EDE218600DBB0DF /* ChallengeTemplateDTO.swift */; };
 		0C6DC0852EDE222E00DBB0DF /* TemplateLibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6DC0842EDE222E00DBB0DF /* TemplateLibraryView.swift */; };
+		0CA52C7A2EEF0D0400E241BC /* FriendDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA52C792EEF0D0400E241BC /* FriendDTO.swift */; };
+		0CA52C7C2EEF0D4100E241BC /* FriendsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA52C7B2EEF0D4100E241BC /* FriendsService.swift */; };
+		0CA52C7E2EEF0DF800E241BC /* FriendsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA52C7D2EEF0DF800E241BC /* FriendsList.swift */; };
+		0CA52C802EEF38D100E241BC /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA52C7F2EEF38D100E241BC /* AvatarView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -81,6 +85,10 @@
 		0C6DC0802EDE02DB00DBB0DF /* FriendsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsStore.swift; sourceTree = "<group>"; };
 		0C6DC0822EDE218600DBB0DF /* ChallengeTemplateDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeTemplateDTO.swift; sourceTree = "<group>"; };
 		0C6DC0842EDE222E00DBB0DF /* TemplateLibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateLibraryView.swift; sourceTree = "<group>"; };
+		0CA52C792EEF0D0400E241BC /* FriendDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendDTO.swift; sourceTree = "<group>"; };
+		0CA52C7B2EEF0D4100E241BC /* FriendsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsService.swift; sourceTree = "<group>"; };
+		0CA52C7D2EEF0DF800E241BC /* FriendsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsList.swift; sourceTree = "<group>"; };
+		0CA52C7F2EEF38D100E241BC /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
 		0CCF21642EE8899B00405824 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -150,6 +158,9 @@
 				0C6DC0622ECE87E400DBB0DF /* FriendsView.swift */,
 				0C6DC07C2EDDFC3400DBB0DF /* ParticipantDTO.swift */,
 				0C6DC0802EDE02DB00DBB0DF /* FriendsStore.swift */,
+				0CA52C792EEF0D0400E241BC /* FriendDTO.swift */,
+				0CA52C7B2EEF0D4100E241BC /* FriendsService.swift */,
+				0CA52C7D2EEF0DF800E241BC /* FriendsList.swift */,
 			);
 			path = friends;
 			sourceTree = "<group>";
@@ -181,6 +192,7 @@
 				0C2BCA162EE5EA1F0052F90D /* home */,
 				0C6DC0542ECE7BDF00DBB0DF /* ProgressBarView.swift */,
 				0C6DC04C2ECE779900DBB0DF /* SessionViewModel.swift */,
+				0CA52C7F2EEF38D100E241BC /* AvatarView.swift */,
 				0C6DC04E2ECE77D800DBB0DF /* RootView.swift */,
 				0C6DC0362ECE434500DBB0DF /* HabitsTrackerApp.swift */,
 				0C6DC0382ECE434500DBB0DF /* OnboardingView.swift */,
@@ -284,6 +296,7 @@
 				0C6DC06D2EDCF0ED00DBB0DF /* KeychainService.swift in Sources */,
 				0C6DC07B2EDD111B00DBB0DF /* ChallengeRequests.swift in Sources */,
 				0C6DC0672ECE88FA00DBB0DF /* SearchField.swift in Sources */,
+				0CA52C802EEF38D100E241BC /* AvatarView.swift in Sources */,
 				0C6DC0372ECE434500DBB0DF /* HabitsTrackerApp.swift in Sources */,
 				0C6DC0692EDCEFBA00DBB0DF /* APIClient.swift in Sources */,
 				0C6DC0852EDE222E00DBB0DF /* TemplateLibraryView.swift in Sources */,
@@ -291,8 +304,11 @@
 				0C6DC0712EDCF2D200DBB0DF /* UserDTO.swift in Sources */,
 				0C6DC05F2ECE84D800DBB0DF /* ProfileView.swift in Sources */,
 				0C2BCA1C2EE656870052F90D /* ProfileViewModel.swift in Sources */,
+				0CA52C7A2EEF0D0400E241BC /* FriendDTO.swift in Sources */,
 				0C6DC0732EDCF32E00DBB0DF /* ChallengeService.swift in Sources */,
 				0C6DC04B2ECE74A100DBB0DF /* HomeView.swift in Sources */,
+				0CA52C7C2EEF0D4100E241BC /* FriendsService.swift in Sources */,
+				0CA52C7E2EEF0DF800E241BC /* FriendsList.swift in Sources */,
 				0C6DC04D2ECE779900DBB0DF /* SessionViewModel.swift in Sources */,
 				0C6DC0532ECE7BA800DBB0DF /* ChallengeDetailView.swift in Sources */,
 				0C6DC0632ECE87E400DBB0DF /* FriendsView.swift in Sources */,
@@ -443,6 +459,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HabitsTracker/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "App использует локальную сеть для связи с backend-сервером";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -475,6 +492,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HabitsTracker/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "App использует локальную сеть для связи с backend-сервером";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

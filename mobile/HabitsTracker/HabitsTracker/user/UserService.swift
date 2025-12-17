@@ -27,7 +27,7 @@ final class UserService {
         )
     }
     
-    private let baseURL = URL(string: "http://93.175.4.58:8086/api")
+    private let baseURL = URL(string: "http://10.25.145.1:8086/api")
     func uploadAvatar(imageData: Data, token: String) async throws -> UserDTO {
         let url = baseURL!.appending(path: "users/me/avatar")
 

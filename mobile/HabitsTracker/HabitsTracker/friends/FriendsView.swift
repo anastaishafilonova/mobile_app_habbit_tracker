@@ -2,7 +2,7 @@ import SwiftUI
 
 struct FriendsView: View {
     @EnvironmentObject var session: SessionViewModel
-    @StateObject private var viewModel = FriendsViewModel()
+    @StateObject private var vm = FriendsViewModel()
     @State private var showAddFriend = false
 
     var body: some View {
@@ -10,25 +10,46 @@ struct FriendsView: View {
             Color.black.ignoresSafeArea()
 
             ScrollView(showsIndicators: false) {
-                VStack(alignment: .leading, spacing: 20) {
+                VStack(alignment: .leading, spacing: 16) {
 
-                    Text("Друзья")
-                        .font(.system(size: 24, weight: .bold))
-                        .foregroundColor(.white)
-                        .padding(.top, 8)
-
-                    SearchField(text: $viewModel.searchText)
-
-                    if viewModel.filteredFriends.isEmpty {
-                        Text("Добавьте вашего первого друга")
-                            .foregroundColor(.white.opacity(0.7))
-                            .padding(.top, 16)
-                    } else {
-                        VStack(spacing: 10) {
-                            ForEach(viewModel.filteredFriends) { friend in
-                                FriendRow(friend: friend)
-                            }
+                    HStack {
+                        Spacer()
+                        Text("Друзья")
+                            .font(.system(size: 24, weight: .bold))
+                            .foregroundColor(.white)
+                        Spacer()
+                        if vm.isLoading {
+                            ProgressView().tint(.white)
                         }
+                    }
+                    .padding(.top, 8)
+
+                    Picker("", selection: $vm.tab) {
+                        ForEach(FriendsViewModel.Tab.allCases) { t in
+                            Text(t.rawValue).tag(t)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+
+                    SearchField(text: $vm.searchText)
+
+                    if let err = vm.errorText {
+                        Text(err)
+                            .foregroundColor(.red.opacity(0.9))
+                            .font(.system(size: 13))
+                    }
+
+                    switch vm.tab {
+                    case .friends:
+                        FriendsList(items: vm.filteredFriends, myId: vm.myId)
+                    case .incoming:
+                        IncomingList(items: vm.filteredIncoming) { id in
+                            Task { await vm.accept(id) }
+                        } onReject: { id in
+                            Task { await vm.reject(id) }
+                        }
+                    case .outgoing:
+                        OutgoingList(items: vm.filteredOutgoing)
                     }
 
                     Spacer(minLength: 80)
@@ -63,63 +84,30 @@ struct FriendsView: View {
                 .padding(.bottom, 24)
             }
         }
-        .onAppear {
-            if let id = session.currentUser?.id {
-                viewModel.configure(userId: id)
-            }
-        }
-        .task {
-            if let token = session.token {
-                await viewModel.loadUsers(token: token)
-            }
-            viewModel.loadFriends()
+        .task(id: session.currentUser?.id) {
+            guard let me = session.currentUser?.id, let token = session.token else { return }
+            vm.configure(myId: me, token: token)
+            await vm.loadUsersViaYourService()
+            await vm.reloadAll()
         }
         .sheet(isPresented: $showAddFriend) {
-            AddFriendView(
-                allUsers: viewModel.allUsers,
-                existingFriends: viewModel.friends,
-                currentUserId: session.currentUser!.id
-            ) { newFriend in
-                viewModel.addFriend(newFriend)
+            if let me = session.currentUser?.id {
+                let confirmed = Set(vm.friends.compactMap { vm.otherUser(for: $0)?.id })
+                let incoming = Set(vm.incoming.map { $0.requester.id })
+                let outgoing = Set(vm.outgoing.map { $0.addressee.id })
+                let blocked = confirmed.union(incoming).union(outgoing)
+
+                AddFriendView(
+                    allUsers: vm.allUsers,
+                    existingFriendIds: blocked,
+                    currentUserId: me
+                ) { user in
+                    Task { await vm.sendFriendRequest(to: user.id) }
+                }
+            } else {
+                Text("Загрузка…").preferredColorScheme(.dark)
             }
         }
         .preferredColorScheme(.dark)
-    }
-}
-
-private struct FriendRow: View {
-    let friend: UserDTO
-
-    var body: some View {
-        HStack(spacing: 12) {
-            Circle()
-                .fill(Color.white.opacity(0.1))
-                .frame(width: 46, height: 46)
-                .overlay(
-                    Image(systemName: "person.fill")
-                        .foregroundColor(.white)
-                )
-
-            VStack(alignment: .leading, spacing: 4) {
-                Text(friend.name)
-                    .font(.system(size: 16, weight: .semibold))
-                    .foregroundColor(.white)
-
-                Text(friend.email)
-                    .font(.system(size: 13))
-                    .foregroundColor(Color.white.opacity(0.7))
-
-                Text("Score: \(friend.score)")
-                    .font(.system(size: 13))
-                    .foregroundColor(Color.white.opacity(0.8))
-            }
-
-            Spacer()
-        }
-        .padding(12)
-        .background(
-            RoundedRectangle(cornerRadius: 20)
-                .fill(Color.white.opacity(0.06))
-        )
     }
 }

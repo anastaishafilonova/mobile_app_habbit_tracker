@@ -175,7 +175,7 @@ struct AuthView: View {
             } catch {
                 await MainActor.run {
                     isLoading = false
-                    errorMessage = "Ошибка входа. Попробуйте ещё раз."
+                    errorMessage = "Ошибка входа. Попробуйте ещё раз"
                 }
             }
         }

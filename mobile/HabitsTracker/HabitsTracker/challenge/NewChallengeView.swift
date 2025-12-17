@@ -233,9 +233,29 @@ struct NewChallengeView: View {
                 .environmentObject(session)
             }
             .task {
-                let stored = FriendsStore.shared.load(for: session.currentUser!.id)
-                friendSelections = stored.map { LocalFriendSelection(user: $0) }
+                guard let me = session.currentUser?.id,
+                      let token = session.token else { return }
+
+                do {
+                    let friendships = try await FriendsService.shared.friends(token: token)
+
+                    let users: [UserDTO] = friendships.map { f in
+                        let other = (f.requester.id == me) ? f.addressee : f.requester
+                        return UserDTO(
+                            id: other.id,
+                            name: other.username,
+                            email: other.email, 
+                            avatarImage: other.avatarImage,
+                            score: other.score
+                        )
+                    }
+
+                    friendSelections = users.map { LocalFriendSelection(user: $0) }
+                } catch {
+                    errorMessage = "Не удалось загрузить друзей: \(error.localizedDescription)"
+                }
             }
+
             .preferredColorScheme(.dark)
             .alert("Ошибка", isPresented: Binding(
                 get: { errorMessage != nil },
@@ -387,13 +407,7 @@ struct LocalFriendRow: View {
 
     var body: some View {
         HStack(spacing: 12) {
-            Circle()
-                .fill(Color.white.opacity(0.12))
-                .frame(width: 44, height: 44)
-                .overlay(
-                    Image(systemName: "person.fill")
-                        .foregroundColor(.white)
-                )
+            AvatarView(avatarPath: selection.user.avatarImage, size: 46)
 
             VStack(alignment: .leading, spacing: 4) {
                 Text(selection.user.name)
@@ -404,7 +418,7 @@ struct LocalFriendRow: View {
                     .foregroundColor(.white.opacity(0.7))
                     .font(.system(size: 13))
 
-                Text("Score: \(selection.user.score)")
+                Text("Баллы: \(selection.user.score)")
                     .foregroundColor(.white.opacity(0.7))
                     .font(.system(size: 13))
             }

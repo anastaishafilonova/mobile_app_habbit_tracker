@@ -1,10 +1,3 @@
-//
-//  ProfileViewModel.swift
-//  HabitsTracker
-//
-//  Created by anastaisha on 05.12.2025.
-//
-
 import SwiftUI
 
 @MainActor

@@ -21,6 +21,7 @@ struct ChallengeDetailView: View {
     @State private var isInvitingFriends = false
     @State private var isDeleting = false
     @State private var errorMessage: String?
+    @State private var all_friends: [UserDTO] = []
 
     @State private var participants: [ParticipantDTO] = []
     
@@ -60,12 +61,35 @@ struct ChallengeDetailView: View {
                 .padding(.vertical, 16)
             }
         }
+        .task {
+            guard let me = session.currentUser?.id,
+                  let token = session.token else { return }
+
+            do {
+                let friendships = try await FriendsService.shared.friends(token: token)
+
+                let users: [UserDTO] = friendships.map { f in
+                    let other = (f.requester.id == me) ? f.addressee : f.requester
+                    return UserDTO(
+                        id: other.id,
+                        name: other.username,
+                        email: other.email,
+                        avatarImage: other.avatarImage,
+                        score: other.score
+                    )
+                }
+
+                all_friends = users
+            } catch {
+                errorMessage = "Не удалось загрузить друзей: \(error.localizedDescription)"
+            }
+        }
         .onAppear { participants = challenge.participants }
         .sheet(isPresented: $isInvitingFriends) {
             InviteFriendsView(
                 challenge: $challenge,
                 existingParticipants: participants,
-                friends: FriendsStore.shared.load(for: session.currentUser!.id),
+                friends: all_friends,
                 onInvite: { ids in
                     Task {
                         await inviteUsers(ids)
@@ -357,15 +381,19 @@ struct ChallengeParticipantRow: View {
 
     var body: some View {
         HStack(spacing: 12) {
-            ZStack {
-                Circle()
-                    .fill(isCurrentUser ? Color.primaryPurple : Color.white.opacity(0.16))
-
-                Text(String(participant.username.prefix(1)))
-                    .font(.system(size: 18, weight: .bold))
-                    .foregroundColor(.white)
+            if let avatarImage = participant.avatarImage {
+                AvatarView(avatarPath: avatarImage, size: 46)
+            } else {
+                ZStack {
+                    Circle()
+                        .fill(isCurrentUser ? Color.primaryPurple : Color.white.opacity(0.16))
+                    
+                    Text(String(participant.username.prefix(1)))
+                        .font(.system(size: 18, weight: .bold))
+                        .foregroundColor(.white)
+                }
+                .frame(width: 44, height: 44)
             }
-            .frame(width: 44, height: 44)
 
             VStack(alignment: .leading, spacing: 4) {
                 HStack(spacing: 6) {

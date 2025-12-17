@@ -2,7 +2,7 @@ import SwiftUI
 
 struct AddFriendView: View {
     let allUsers: [UserDTO]
-    let existingFriends: [UserDTO]
+    let existingFriendIds: Set<UUID>
     let currentUserId: UUID
     let onSelect: (UserDTO) -> Void
 
@@ -11,16 +11,15 @@ struct AddFriendView: View {
 
     var candidates: [UserDTO] {
         allUsers.filter { u in
-            !existingFriends.contains(where: { $0.id == u.id }) && !(u.id == currentUserId)
+            u.id != currentUserId && !existingFriendIds.contains(u.id)
         }
     }
 
     var filtered: [UserDTO] {
-        let q = searchText.lowercased().trimmingCharacters(in: .whitespaces)
+        let q = searchText.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
         guard !q.isEmpty else { return candidates }
         return candidates.filter {
-            $0.name.lowercased().contains(q) ||
-            $0.email.lowercased().contains(q)
+            $0.name.lowercased().contains(q) || $0.email.lowercased().contains(q)
         }
     }
 
@@ -30,7 +29,6 @@ struct AddFriendView: View {
                 Color.black.ignoresSafeArea()
 
                 VStack(alignment: .leading, spacing: 16) {
-
                     SearchField(text: $searchText)
 
                     if filtered.isEmpty {
@@ -56,12 +54,6 @@ struct AddFriendView: View {
             }
             .navigationTitle("Добавить друга")
             .navigationBarTitleDisplayMode(.inline)
-//            .toolbar {
-//                ToolbarItem(placement: .cancellationAction) {
-//                    Button("Закрыть") { dismiss() }
-//                        .foregroundColor(.white)
-//                }
-//            }
         }
         .preferredColorScheme(.dark)
     }
@@ -73,13 +65,7 @@ struct AddFriendRow: View {
 
     var body: some View {
         HStack(spacing: 12) {
-            Circle()
-                .fill(Color.white.opacity(0.12))
-                .frame(width: 44, height: 44)
-                .overlay(
-                    Image(systemName: "person.fill")
-                        .foregroundColor(.white)
-                )
+            AvatarView(avatarPath: user.avatarImage, size: 46)
 
             VStack(alignment: .leading, spacing: 4) {
                 Text(user.name)

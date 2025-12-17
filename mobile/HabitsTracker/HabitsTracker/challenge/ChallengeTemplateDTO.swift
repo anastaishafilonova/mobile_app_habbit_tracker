@@ -1,10 +1,3 @@
-//
-//  ChallengeTemplateDTO.swift
-//  HabitsTracker
-//
-//  Created by anastaisha on 01.12.2025.
-//
-
 import Foundation
 
 struct ChallengeTemplateDTO: Decodable, Identifiable {
